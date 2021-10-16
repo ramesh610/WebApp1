@@ -21,7 +21,7 @@ pipeline {
           agent {
             node {
               customWorkspace 'workspace/WebAppUIAutomation'
-              label '\' \''
+              label 'master'
             }
 
           }
@@ -36,7 +36,7 @@ pipeline {
           agent {
             node {
               customWorkspace 'workspace/WebAppAPIAutomation'
-              label '\' \''
+              label 'master'
             }
 
           }
