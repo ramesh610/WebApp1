@@ -21,7 +21,7 @@ pipeline {
           agent {
             node {
               customWorkspace 'workspace/WebAppUIAutomation'
-              label 'label'
+              label '\' \''
             }
 
           }
@@ -33,7 +33,13 @@ pipeline {
         }
 
         stage('qa-git-api-test') {
-          agent any
+          agent {
+            node {
+              customWorkspace 'workspace/WebAppAPIAutomation'
+              label '\' \''
+            }
+
+          }
           steps {
             git 'https://github.com/ramesh610/WebAppApiAutomation.git'
             bat 'mvn test'
