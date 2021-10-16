@@ -1,66 +1,67 @@
 pipeline {
   agent any
   stages {
-    stage('Dev Code Pull') {
+    stage('dev-git-pull') {
       steps {
-        echo 'Dev code pull completed'
+        git 'https://github.com/TestLeafInc/WebApp.git'
       }
     }
 
-    stage('Dev Maven Build') {
+    stage('dev-build') {
       steps {
-        echo 'Maven Completed'
+        bat 'start /min StopApp.bat'
+        bat 'mvn install'
+        bat 'set JENKINS_NODE_COOKIE=dontKillMe && start /min StartApp.bat'
       }
     }
 
-    stage('QA Deploy') {
-      steps {
-        echo 'QA To Start'
-      }
-    }
-
-    stage('QA Test') {
+    stage('Testing') {
       parallel {
-        stage('QA Test') {
+        stage('qa-git-ui-test') {
+          agent {
+            node {
+              customWorkspace 'workspace/WebAppUIAutomation'
+              label 'label'
+            }
+
+          }
           steps {
-            echo 'Deploy to QA'
+            git 'https://github.com/ramesh610/WebAppUiAutomation.git'
+            sleep(time: 10, unit: 'SECONDS')
+            bat 'mvn test'
           }
         }
 
-        stage('Web') {
+        stage('qa-git-api-test') {
+          agent any
           steps {
-            echo 'Code Pull'
-            echo 'Run tests'
-          }
-        }
-
-        stage('API') {
-          steps {
-            echo 'Code Pull'
-            echo 'Run Test'
+            git 'https://github.com/ramesh610/WebAppApiAutomation.git'
+            bat 'mvn test'
           }
         }
 
       }
     }
 
-    stage('QA Certification') {
-      steps {
-        echo 'UAT Certification'
-      }
+  }
+  tools {
+    maven 'Maven'
+  }
+  post {
+    always {
+      echo 'Either success or failure'
     }
 
-    stage('UAT Deploy') {
-      steps {
-        echo 'UAT Deploy'
-      }
+    success {
+      echo 'send mail to my pm'
     }
 
-    stage('UAT Certification') {
-      steps {
-        echo 'UAT Certification'
-      }
+    failure {
+      echo 'sent it to dev'
     }
 
+  }
+  triggers {
+    cron('50 14 * * 0')
   }
 }
