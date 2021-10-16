@@ -1,67 +1,64 @@
 pipeline {
   agent any
   stages {
-    stage('Dev Build') {
+    stage('Dev Code Pull') {
       steps {
-        echo 'Maven Build Done Locally ..'
-        echo 'Unit tests executed'
+        echo 'Dev code pull completed'
       }
     }
 
-    stage('Deploy to QA') {
+    stage('Dev Maven Build') {
       steps {
-        echo 'Deploy to QA Env'
-        echo 'Notify QA by Email'
+        echo 'Maven Completed'
       }
     }
 
-    stage('Ui Testing (Smoke)') {
+    stage('QA Deploy') {
+      steps {
+        echo 'QA To Start'
+      }
+    }
+
+    stage('QA Test') {
       parallel {
-        stage('Ui Testing (Smoke)') {
+        stage('QA Test') {
           steps {
-            echo 'Selenium Tests (Smoke)'
+            echo 'Deploy to QA'
           }
         }
 
-        stage('API Tests (Smoke)') {
+        stage('Web') {
           steps {
-            echo 'Run Rest Assured Tests'
+            echo 'Code Pull'
+            echo 'Run tests'
           }
         }
 
-        stage('Performance Tests') {
+        stage('API') {
           steps {
-            echo 'Run JMeter tests'
+            echo 'Code Pull'
+            echo 'Run Test'
           }
         }
 
       }
     }
 
-    stage('Deploy to UAT') {
+    stage('QA Certification') {
       steps {
-        echo 'Deploy to UAT (AWS)'
-        echo 'Notify the UAT users'
-        jiraComment(issueKey: 'S04-83', body: 'Jenkins Completed Testing and about to start UAT deployment')
+        echo 'UAT Certification'
       }
     }
 
-    stage('Certify UAT') {
-      when {
-        branch 'master'
-      }
+    stage('UAT Deploy') {
       steps {
-        echo 'Manual Certify'
-        input 'Do you want to certify?'
+        echo 'UAT Deploy'
       }
     }
 
-    stage('Prod Deploy') {
-      when {
-        branch 'master'
-      }
+    stage('UAT Certification') {
       steps {
-        echo 'Deploy to Prod'
+        echo 'UAT Certification'
       }
     }
 
