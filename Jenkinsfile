@@ -10,7 +10,7 @@ pipeline {
     stage('dev-build') {
       steps {
         bat 'start /min StopApp.bat'
-        bat 'mvn clean install'
+        bat 'mvn install'
         bat 'set JENKINS_NODE_COOKIE=dontKillMe && start /min StartApp.bat'
       }
     }
