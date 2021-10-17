@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('dev-git-pull') {
       steps {
-        git 'https://github.com/ramesh610/WebApp1.git'
+        git 'https://github.com/ramesh610/WebAppNew.git'
       }
     }
 
