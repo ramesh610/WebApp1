@@ -69,6 +69,12 @@ pipeline {
       }
     }
 
+    stage('Email Sent') {
+      steps {
+        emailext(subject: 'Deploymentcompleted', body: 'Build Deployed', from: 'raj.sekaran2021@gmail.com', replyTo: 'ramesh610@gmail.com', to: 'ramesh610@gmail.com')
+      }
+    }
+
   }
   tools {
     maven 'Maven'
