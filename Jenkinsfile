@@ -56,6 +56,19 @@ pipeline {
       }
     }
 
+    stage('Certify UAT') {
+      steps {
+        echo 'echo \'Manual Certify\''
+        input '\'Do you want to certify?\''
+      }
+    }
+
+    stage('Prod Deploy') {
+      steps {
+        echo 'echo \'Deploy to Prod\''
+      }
+    }
+
   }
   tools {
     maven 'Maven'
