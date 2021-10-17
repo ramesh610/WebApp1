@@ -49,6 +49,13 @@ pipeline {
       }
     }
 
+    stage('Deploy to UAt') {
+      steps {
+        echo 'echo \'Deploy to UAT (AWS)\''
+        echo 'echo \'Notify the UAT users\''
+      }
+    }
+
   }
   tools {
     maven 'Maven'
