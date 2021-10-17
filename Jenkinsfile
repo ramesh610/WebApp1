@@ -93,7 +93,4 @@ pipeline {
     }
 
   }
-  triggers {
-    cron('50 14 * * 0')
-  }
 }
