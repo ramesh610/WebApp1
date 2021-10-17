@@ -20,7 +20,7 @@ pipeline {
         stage('qa-git-ui-test') {
           agent {
             node {
-              customWorkspace 'workspace/WebAppUIAutomation'
+              customWorkspace 'workspace/WebAppUIAutomation1'
               label 'master'
             }
 
@@ -35,7 +35,7 @@ pipeline {
         stage('qa-git-api-test') {
           agent {
             node {
-              customWorkspace 'workspace/WebAppAPIAutomation'
+              customWorkspace 'workspace/WebAppAPIAutomation1'
               label 'master'
             }
 
